@@ -10,7 +10,7 @@ summary_text_file.py [-h] [-l LENGTH] path [path ...]
 
 path
 
-A full or relative path to a text file or several text files to summarise
+A full or relative path to a text file, several text files or a directory of text files to summarise
 
 
 ## Optional Arguments:

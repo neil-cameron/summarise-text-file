@@ -28,9 +28,20 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Parse arguments
-list_of_paths = []
+argparse_list_of_paths = []
 if args.path:
-    [list_of_paths.append(individual_path) for individual_path in args.path]
+    [argparse_list_of_paths.append(individual_path) for individual_path in args.path]
+
+full_file_path_list = []  # This is sent to the main summarising function
+for individual_path in argparse_list_of_paths:
+    if os.path.isdir(individual_path):  # Directory
+        for dir_path, dir_names, file_names in os.walk(individual_path):
+            for file_name in file_names:
+                if not file_name.startswith("."):
+                    file_path_found = os.path.join(dir_path, file_name)
+                    full_file_path_list.append(file_path_found)
+    else:  # File
+        full_file_path_list.append(individual_path)
 
 summary_length = 300  # Final overall summary length for the complete text
 if args.length:
@@ -105,7 +116,7 @@ def batch_summariser(text, batch_summary_length):
 
 
 # Loop to open each file and summarise it
-for path in list_of_paths:
+for path in full_file_path_list:
     # Read the file and split it into a list of words
     with open(path, "r") as file:
         text = str(file.read().replace("\n", ""))
