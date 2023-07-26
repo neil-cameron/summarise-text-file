@@ -116,7 +116,9 @@ def batch_summariser(text, batch_summary_length):
 
 
 # Loop to open each file and summarise it
-for path in full_file_path_list:
+for path_counter, path in enumerate(full_file_path_list):
+    print(f"Summarising file {path_counter+1} of {len(full_file_path_list)}...")
+
     # Read the file and split it into a list of words
     with open(path, "r") as file:
         text = str(file.read().replace("\n", ""))
